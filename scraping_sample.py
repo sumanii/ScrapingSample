@@ -32,9 +32,9 @@ def Search2ndBase(outputDir: str, fileFormat: int, view: bool):
         html = driver.page_source.encode("utf-8")
         soup = BeautifulSoup(html, "html.parser")
 
-        categoryList = soup.find("div", attrs={"class": "category-list-wrap"})
+        categoryList = soup.find("div", attrs={"id": "r_categoryList"})
         categoryListDetails = categoryList.find_all(
-            "div", attrs={"class": "category-list-detail"})
+            "div", attrs={"class": "detail"})
 
         if len(categoryListDetails) == 0:
             break

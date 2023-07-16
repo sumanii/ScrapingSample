@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import bs4
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver import Chrome, ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
 import time
 import re
 import pandas as pd
@@ -12,13 +12,15 @@ import pandas as pd
 def Search2ndBase(outputDir: str, fileFormat: int, view: bool):
     urlBase = "https://www.2ndbase.jp/shopbrand/ct5/"
 
-    options = Options()
+    options = ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     options.use_chromium = True
 
     if view == False:
         options.add_argument("--headless")
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    new_driver = ChromeDriverManager().install()
+    service = ChromeService(executable_path=new_driver)
+    driver = Chrome(service=service, options=options)
 
     pageNum = 1
     focalLength: list[int] = []
